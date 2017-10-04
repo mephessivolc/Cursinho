@@ -1,0 +1,47 @@
+footer {
+  display: block;
+}
+
+body {
+  background-color: blue;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.text-none {
+  text-decoration: none;
+  color: black;
+}
+
+.text-none:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  etext-align: right;
+}
+
+.text-space {
+  margin: 1px;
+}
+
+.padding-top {
+  padding-top: 5%;
+}
+
+.marge-lw {
+  /* little marg*/
+  margin: 2% 0 2% 0;
+}
+
+.marge-md {
+  /* medium marge */
+  margin: 3% 0 3% 0;
+}

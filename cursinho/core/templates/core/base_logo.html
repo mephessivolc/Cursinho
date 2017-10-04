@@ -1,0 +1,32 @@
+<!doctype html>
+{% load staticfiles %}
+
+<html>
+  <head lang='pt-br'>
+    <title>ATE Gerenciamento Escolar</title>
+    <link rel="stylesheet" href="{% static 'css/standard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap-theme.min.css' %}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
+
+  <body>
+    <div class='container'>
+      <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 text-center"><h1>ATE<small><br>Gerenciamento Escolar</small></h1></div>
+      </div>
+
+      <div class="row marging">
+
+      {% block content %}{% endblock %}
+
+    </div>
+  </body>
+  <footer>
+    <div class="row text-center">
+      <strong>Cursinhos</strong> Comunitários
+    </div>
+  </footer>
+</html>

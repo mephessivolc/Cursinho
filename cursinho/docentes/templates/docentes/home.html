@@ -1,0 +1,28 @@
+{% extends 'docentes/base.html' %}
+
+{% block extend_right %}
+  <table class='table table-hover table-bordered'>
+    <tr>
+      <th class='text-center'>#</th>
+      <th class='text-center'>Apelido</td>
+      <th class='text-center'>Email</td>
+      <th class='text-center'>Nome</td>
+    </tr>
+    {% for field in form %}
+    <tr>
+        <td class='text-center'>
+          <a href='{% url "docentes:details" field.slug %}' class='without text-none'>
+            {{ forloop.counter }}</a></td>
+        <td>
+          <a href='{% url "docentes:details" field.slug %}' class='without text-none'>
+            {{ field.username }}</a></td>
+      <td>
+        <a href='{% url "docentes:details" field.slug %}' class='without text-none'>
+          {{ field.email }}</td></a></td>
+      <td>
+        <a href='{% url "docentes:details" field.slug %}' class='without text-none'>
+          {{ field.name }}</a></td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}
