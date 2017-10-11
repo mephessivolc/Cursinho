@@ -7,97 +7,28 @@ from django.conf import settings
 
 from cursinho.core.utils import generate_hash_key
 
-from .forms import RegisterForm, EditAccountForm, PasswordResetForm
-from .models import PasswordReset
+from .forms import UserForm
+# from .models import PasswordReset
 
 User = get_user_model()
-
 @login_required(login_url='accounts:login')
-def dashboard(request):
-    context={
-        'loading': "Painel",
+def home(request):
+    context = {
+        'loading': 'Docentes',
     }
-    template_name = 'accounts/dashboard.html'
+    template_name = "accounts/home.html"
     return render(request, template_name, context)
 
-def register(request):
+def insert(request):
+    # form = RegisterAlunoForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect('alunos:home')
+
+    context = {
+        'loading': 'Docentes',
+        # 'form': form,
+
+    }
     template_name = 'accounts/register.html'
-    context = {
-        'loading': 'Painel',
-    }
-    if request.method == 'post':
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            user = authenticate(
-                username=user.username, password=form.cleaned_data['password1']
-            )
-            login(request, user)
-            return redirect('core:home')
-    else:
-        form = RegisterForm()
-    context = {
-        'form': form,
-    }
     return render(request, template_name, context)
-
-def password_reset(request):
-    template_name = 'accounts/password_reset.html'
-    context = {
-        'loading': 'Painel',
-    }
-    form = PasswordResetForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        context['success'] = True
-    context['form'] = form
-    return render(request, template_name, context)
-
-def password_reset_confirm(request, key):
-    template_name = 'accounts/password_reset_confirm.html'
-    context = {
-        'loading': 'Painel',
-    }
-    reset = get_object_or_404(PasswordReset, key=key)
-    form = SetPasswordForm(user=reset.user, data=request.POST or None)
-    if form.is_valid():
-        form.save()
-        context['success'] = True
-    context['form'] = form
-    return render(request, template_name, context)
-
-@login_required
-def edit(request):
-    template_name = 'accounts/edit.html'
-    context = {
-        'loading': 'Painel',
-    }
-    if request.method == 'POST':
-        form = EditAccountForm(request.POST, instance=request.user)
-        if form.is_valid():
-            form.save()
-            form = EditAccountForm(instance=request.user)
-            context['success'] = True
-    else:
-        form = EditAccountForm(instance=request.user)
-    context['form'] = form
-    return render(request, template_name, context)
-
-@login_required
-def edit_password(request):
-    template_name = 'accounts/edit_password.html'
-    context = {
-        'loading': 'Painel',
-    }
-    if request.method == 'POST':
-        form = PasswordChangeForm(data=request.POST, user=request.user)
-        if form.is_valid():
-            form.save()
-            context['success'] = True
-    else:
-        form = PasswordChangeForm(user=request.user)
-    context['form'] = form
-    return render(request, template_name, context)
-
-def details(request):
-    pass

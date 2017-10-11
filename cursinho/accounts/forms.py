@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 from cursinho.core.mail import send_mail_template
 from cursinho.core.utils import generate_hash_key
 
-from .models import PasswordReset
+# from .models import PasswordReset
 
 User = get_user_model()
 
@@ -26,40 +26,9 @@ Atributos = {
         'class': 'form-control'}),
     'password': forms.TextInput(attrs={'class': 'form-control',
     'type': 'password'}),
-    'end': forms.TextInput(attrs={'placeholder': 'Endereço Completo',
-        'class': 'form-control'}),
-    'numero': forms.TextInput(attrs={'placeholder': '9999',
-        'class': 'form-control'}),
-    'bairro': forms.TextInput(attrs={'class': 'form-control'}),
-    'comp': forms.TextInput(attrs={'class': 'form-control'}),
     #  my_field: forms.MultipleChoiceField(choices=SOME_CHOICES, widget=forms.CheckboxSelectMultiple())
     'cargo': forms.Select(attrs={'class': 'select'}, choices=Cargo), # campo de menu selecao
 }
-
-class PasswordResetForm(forms.Form):
-
-    email = forms.EmailField(label='E-mail')
-
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        if User.objects.filter(email=email).exists():
-            return email
-        raise forms.ValidationError(
-            'Nenhum usuário encontrado com este e-mail'
-        )
-
-    def save(self):
-        user = User.objects.get(email=self.cleaned_data['email'])
-        key = generate_hash_key(user.username)
-        reset = PasswordReset(key=key, user=user)
-        reset.save()
-        template_name = 'accounts/password_reset_mail.html'
-        subject = 'Criar nova senha no Simple MOOC'
-        context = {
-            'reset': reset,
-        }
-        send_mail_template(subject, template_name, context, [user.email])
-
 
 class RegisterForm(forms.ModelForm):
 
@@ -88,16 +57,12 @@ class RegisterForm(forms.ModelForm):
 
         widgets = Atributos
 
-class EditAccountForm(forms.ModelForm):
-
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'name']
-
-    widgets = Atributos
-
 class UserForm(forms.ModelForm):
 
+    password1 = forms.PasswordInput(attrs={'class': 'form-control',
+        'placeholder': 'Senha'})
+    password1 = forms.PasswordInput(attrs={'class': 'form-control',
+        'placeholder': 'Confirmação da Senha'})
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -115,9 +80,7 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['name', 'username', 'email', 'password',
-                'end', 'numero', 'bairro', 'comp', 'cargo',
-        ]
+        fields = ['name', 'username', 'email', 'password',]
 
         widgets = Atributos
 
@@ -125,8 +88,6 @@ class DetailsForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['name', 'username', 'email',
-                'end', 'numero', 'bairro', 'comp', 'cargo',
-        ]
+        fields = ['name', 'username', 'email',]
 
         widgets = Atributos

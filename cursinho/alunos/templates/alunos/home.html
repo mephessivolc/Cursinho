@@ -1,0 +1,34 @@
+{% extends 'alunos/base.html' %}
+
+{% block extend_right %}
+<table class='table table-hover table-bordered'>
+  <tr>
+    <th class='text-center'>#</th>
+    <th class='text-center'>Nome</td>
+    <th class='text-center'>Contato</td>
+    <th class='text-center'>Sala</td>
+  </tr>
+  {% for field in form %}
+  <tr>
+      <td class='text-center'>
+        <a href='#' class='without text-none'>
+          {{ forloop.counter }} </a></td>
+      <td>
+        <a href='#' class='without text-none'>
+          {{ field.username }} ''</a></td>
+    <td>
+      <a href='#' class='without text-none'>
+        {{ field.email }}</td></a></td>
+    <td>
+      <a href='#' class='without text-none'>
+         {{ field.name }} </a></td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td class='text-center' colspan="4">
+      Sem registro no momento
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

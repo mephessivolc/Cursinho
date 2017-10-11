@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 
     'cursinho.core',
     'cursinho.accounts',
-    'cursinho.docentes',
+    'cursinho.alunos',
+    'cursinho.framework',
 ]
 
 MIDDLEWARE = [

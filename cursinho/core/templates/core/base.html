@@ -30,12 +30,11 @@
           <li role="presentation"
           {% if loading == "Docentes" %}
             class="active dropdown"
-          {% endif %}><a href="{% url 'docentes:home' %}">Docentes</a></li>
-          <!-- <li role="presentation"
-          {% if loading == "Painel" %}
+          {% endif %}><a href="{% url 'accounts:home' %}">Docentes</a></li>
+          <li role="presentation"
+          {% if loading == "Alunos" %}
             class="active dropdown"
-          {% endif %}><a href="{% url 'accounts:dashboard' %}">Painel</a></li> -->
-
+          {% endif %}><a href="{% url 'alunos:home' %}">Alunos</a></li>
         </ul>
       </div>
       <div class="row marging">

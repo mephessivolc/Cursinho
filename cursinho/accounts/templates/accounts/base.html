@@ -5,7 +5,7 @@
   <div class="panel-heading">
     <h3 class="panel-title">
       {% block extend_left %}
-        <a href="{% url 'docentes:home' %}">Lista</a>
+        <a href="{% url 'accounts:home' %}">Lista</a>
       {% endblock %}
     </h3>
   </div>
@@ -16,8 +16,8 @@
       </div>
       <div class='col-sd-1 marge-md'>
         <ul>
-          <li><a href="{% url 'docentes:insert' %}">Novo</a></li>
-          
+          <li><a href="{% url 'accounts:insert' %}">Novo</a></li> 
+
         </ul>
       </div>
     </div>
