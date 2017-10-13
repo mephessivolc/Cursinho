@@ -1,6 +1,9 @@
 import hashlib
 import string
 import random
+import itertools
+
+from django.utils.text import slugify
 
 def random_key(size=5):
     chars = string.ascii_uppercase + string.digits

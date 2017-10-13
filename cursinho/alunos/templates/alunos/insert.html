@@ -6,24 +6,11 @@
 {% endblock %}
 
 {% block extend_right %}
-  {{ form.non_field_errors }}
   <form class="form-horizontal" method="POST">
+    {{ form.non_field_errors }}
     {% csrf_token %}
-    {% if success %}
-    <p>Os dados foram inseridos com sucesso</p>
-    {% endif %}
     {% for field in form %}
     <div class="form-group">
-      <!-- <label class="col-sm-2 control-label">{{ field.label_tag }}</label> -->
-      <div class="col-sm-10">
-        {{ field }}
-        <small>{{ field.errors }}</small>
-      </div>
-    </div>
-    {% endfor %}
-    {% for field in formEnd %}
-    <div class="form-group">
-      <!-- <label class="col-sm-2 control-label">{{ field.label_tag }}</label> -->
       <div class="col-sm-10">
         {{ field }}
         <small>{{ field.errors }}</small>

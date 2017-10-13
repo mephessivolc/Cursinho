@@ -1,0 +1,30 @@
+{% extends 'alunos/home.html' %}
+
+{% block extend_left %}
+  {{ block.super }}
+  <small>/ {{ form.name.value }} </small>
+
+{% endblock %}
+
+{% block extend_right %}
+  <form class="form-horizontal" method="POST">
+    {{ form.non_field_errors }}
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group">
+      <div class="col-sm-3 text-right">
+        {{ field.label_tag }}
+      </div>
+      <div class="col-sm-7">
+        {{ field.value }}
+        <small>{{ field.errors }}</small>
+      </div>
+    </div>
+    {% endfor %}
+      <div class="col-sm-offset-1 col-sm-5">
+        <a href="{% url 'alunos:home' %}">
+        <button class="btn btn-default">Voltar</button></a>
+      </div>
+    </div>
+  </form>
+{% endblock %}

@@ -11,9 +11,20 @@ class RegisterAluno(models.Model):
     qtdfilhos = models.IntegerField('Quantidade de Filhos',)
     concEnsMed = models.CharField('Conclusão do Ensino Médio', max_length=3)
     bolsaEnsMed = models.CharField('Bolsa do Ensino Médio', max_length=3)
+    slug = models.SlugField('Atalho', blank=True)
+
+    @models.permalink
+    def get_absolute_link(self):
+        return ('alunos:details', (), {'slug': self.slug})
 
     def __str__(self):
-        return self.name
+        return self.name or self.username
+
+    def get_short_name(self):
+        return self.username
+
+    def get_full_name(self):
+        return str(self)
 
     class Meta:
         verbose_name = 'Aluno'

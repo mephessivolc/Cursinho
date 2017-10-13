@@ -11,11 +11,11 @@
   {% for field in form %}
   <tr>
       <td class='text-center'>
-        <a href='#' class='without text-none'>
+        <a href='{% url "alunos:details" field.slug %}' class='without text-none'>
           {{ forloop.counter }} </a></td>
       <td>
         <a href='#' class='without text-none'>
-          {{ field.username }} ''</a></td>
+          {{ field.name }} </a></td>
     <td>
       <a href='#' class='without text-none'>
         {{ field.email }}</td></a></td>

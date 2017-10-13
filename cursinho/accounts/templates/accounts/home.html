@@ -4,24 +4,24 @@
 <table class='table table-hover table-bordered'>
   <tr>
     <th class='text-center'>#</th>
+    <th class='text-center'>Apelido</td>
     <th class='text-center'>Nome</td>
     <th class='text-center'>Contato</td>
-    <th class='text-center'>Sala</td>
   </tr>
   {% for field in form %}
   <tr>
       <td class='text-center'>
-        <a href='#' class='without text-none'>
+        <a href='{% url "accounts:details" field.slug %}' class='without text-none'>
           {{ forloop.counter }} </a></td>
       <td>
-        <a href='#' class='without text-none'>
+        <a href='{% url "accounts:details" field.slug %}' class='without text-none'>
           {{ field.username }} </a></td>
     <td>
-      <a href='#' class='without text-none'>
-          {{ field.email }} </td></a></td>
+      <a href='{% url "accounts:details" field.slug %}' class='without text-none'>
+          {{ field.name }} </td></a></td>
     <td>
-      <a href='#' class='without text-none'>
-         {{ field.name }} </a></td>
+      <a href='{% url "accounts:details" field.slug %}' class='without text-none'>
+         {{ field.email }} </a></td>
   </tr>
   {% empty %}
   <tr>

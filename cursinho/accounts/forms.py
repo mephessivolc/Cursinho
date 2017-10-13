@@ -1,4 +1,7 @@
+import itertools
+
 from django import forms
+from django.utils.text import slugify
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
@@ -24,18 +27,18 @@ Atributos = {
         'class': 'form-control'}),
     'email': forms.EmailInput(attrs={'placeholder': 'email@pessoal.com',
         'class': 'form-control'}),
-    'password': forms.TextInput(attrs={'class': 'form-control',
-    'type': 'password'}),
+    'password1': forms.TextInput(attrs={'class': 'form-control',
+    'placeholder': 'Senha', 'type': 'password'}),
+    'password2': forms.TextInput(attrs={'class': 'form-control',
+    'placeholder': 'Confirmação de Senha', 'type': 'password'}),
     #  my_field: forms.MultipleChoiceField(choices=SOME_CHOICES, widget=forms.CheckboxSelectMultiple())
     'cargo': forms.Select(attrs={'class': 'select'}, choices=Cargo), # campo de menu selecao
 }
 
 class RegisterForm(forms.ModelForm):
 
-    password1 = forms.CharField(label='Senha', widget=forms.PasswordInput)
-    password2 = forms.CharField(
-        label='Confirmação de Senha', widget=forms.PasswordInput
-    )
+    password1 = forms.CharField(label='Senha')
+    password2 = forms.CharField(label='Confirmação de Senha')
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -58,11 +61,13 @@ class RegisterForm(forms.ModelForm):
         widgets = Atributos
 
 class UserForm(forms.ModelForm):
-
-    password1 = forms.PasswordInput(attrs={'class': 'form-control',
-        'placeholder': 'Senha'})
-    password1 = forms.PasswordInput(attrs={'class': 'form-control',
-        'placeholder': 'Confirmação da Senha'})
+    # password1 = forms.PasswordInput(attrs={'class': 'form-control'}, render_value=True)
+    password1 = forms.CharField(label='Senha',
+        widget=forms.PasswordInput(attrs={'class': 'form-control',
+        'placeholder': 'Senha'}))
+    password2 = forms.CharField(label='Confirmação de Senha',
+        widget=forms.PasswordInput(attrs={'class': 'form-control',
+        'placeholder': 'Confirmação de Senha'}))
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -73,18 +78,26 @@ class UserForm(forms.ModelForm):
 
     def save(self, commit=True):
         user = super(UserForm, self).save(commit=False)
-        user.set_password(self.cleaned_data['password1'])
+        user.set_password(self.cleaned_data['password2'])
+
+        user.slug = orig = slugify(user.username)
+
+        for x in itertools.count(1):
+            if not User.objects.filter(slug=user.slug).exists():
+                break
+            user.slug = '%s-%d' % (orig, x)
+
         if commit:
             user.save()
         return user
 
     class Meta:
         model = User
-        fields = ['name', 'username', 'email', 'password',]
+        fields = ['name', 'username', 'email',]
 
         widgets = Atributos
 
-class DetailsForm(forms.ModelForm):
+class DetailsUserForm(forms.ModelForm):
 
     class Meta:
         model = User
