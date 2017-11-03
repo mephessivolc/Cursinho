@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
 from cursinho.core.utils import generate_hash_key
+from cursinho.core.forms import RegisterEndForm
 
 from .forms import (UserForm, DetailsUserForm)
 # from .models import PasswordReset
@@ -24,14 +25,18 @@ def home(request):
 @login_required(login_url='accounts:login')
 def insert(request):
     form = UserForm(request.POST or None)
-    if form.is_valid():
-        form.save()
+    formEnd = RegisterEndForm(request.POST or None)
+
+    if form.is_valid() and formEnd.is_valid():
+        resp = form.save()
+        formEnd.save(idUser=resp)
         return redirect('accounts:home')
 
     template_name = 'accounts/insert.html'
     context = {
         'loading': 'Docentes',
         'form': form,
+        'formEnd': formEnd,
     }
     return render(request, template_name, context)
 

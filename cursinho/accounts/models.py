@@ -6,7 +6,7 @@ from django.contrib.auth.models import (AbstractBaseUser, PermissionsMixin,
     UserManager)
 from django.conf import settings
 
-from cursinho.framework.models import RegisterEnd
+
 
 class User(AbstractBaseUser, PermissionsMixin):
 

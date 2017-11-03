@@ -36,6 +36,10 @@ ul {
   padding-top: 5%;
 }
 
+.padding-top-1 {
+  padding-top: 0.5%;
+}
+
 .marge-lw {
   /* little marg*/
   margin: 2% 0 2% 0;

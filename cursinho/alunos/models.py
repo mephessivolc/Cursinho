@@ -4,14 +4,19 @@ from django.db import models
 
 class RegisterAluno(models.Model):
     name = models.CharField('Nome', max_length=100)
-    email = models.EmailField('Email')
+    email = models.EmailField('Email', unique=True)
     sex = models.CharField('Sexo', max_length=1)
     dCronicas = models.CharField('Doenças Crônicas', max_length=30)
     estcivil = models.CharField('Estado Civil', max_length=1)
     qtdfilhos = models.IntegerField('Quantidade de Filhos',)
-    concEnsMed = models.CharField('Conclusão do Ensino Médio', max_length=3)
+    concEnsMed = models.CharField('Conclusão do Ensino Médio', max_length=4)
     bolsaEnsMed = models.CharField('Bolsa do Ensino Médio', max_length=3)
     slug = models.SlugField('Atalho', blank=True)
+    cpf = models.CharField('CPF', unique=True, max_length=15, default='')
+    rg = models.CharField('RG', unique=True, max_length=15, default='')
+    # idEnd = models.OneToOneField(RegisterEnd, on_delete=models.CASCADE,
+    #     blank=True, null=True
+    # )
 
     @models.permalink
     def get_absolute_link(self):

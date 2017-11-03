@@ -7,6 +7,7 @@
     <th class='text-center'>Nome</td>
     <th class='text-center'>Contato</td>
     <th class='text-center'>Sala</td>
+    <th> </td>
   </tr>
   {% for field in form %}
   <tr>
@@ -14,14 +15,17 @@
         <a href='{% url "alunos:details" field.slug %}' class='without text-none'>
           {{ forloop.counter }} </a></td>
       <td>
-        <a href='#' class='without text-none'>
+        <a href='{% url "alunos:details" field.slug %}' class='without text-none'>
           {{ field.name }} </a></td>
     <td>
-      <a href='#' class='without text-none'>
+      <a href='{% url "alunos:details" field.slug %}' class='without text-none'>
         {{ field.email }}</td></a></td>
     <td>
-      <a href='#' class='without text-none'>
+      <a href='{% url "alunos:details" field.slug %}' class='without text-none'>
          {{ field.name }} </a></td>
+    <td class='text-center'>
+      <a href='{% url "alunos:update" field.slug %}'>
+         Alterar </a></td>
   </tr>
   {% empty %}
   <tr>

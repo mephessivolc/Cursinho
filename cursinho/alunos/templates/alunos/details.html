@@ -10,21 +10,82 @@
   <form class="form-horizontal" method="POST">
     {{ form.non_field_errors }}
     {% csrf_token %}
-    {% for field in form %}
-    <div class="form-group">
-      <div class="col-sm-3 text-right">
-        {{ field.label_tag }}
+    <fieldset>
+      <legend><div class="col-sm-10 ">
+        Informações Gerais
       </div>
-      <div class="col-sm-7">
-        {{ field.value }}
-        <small>{{ field.errors }}</small>
+      <div class="col-sm-1 text-right">
+        <a href='{% url "alunos:update" form.slug.value %}'>
+           Alterar </a>
+      </div></legend>
+      {% for field in form %}
+        <div class="form-group">
+          <div class="col-sm-3 text-right">
+            {% if not field.widgets.is_hidden %}
+                {{ field.label_tag }}
+            {% endif %}
+          </div>
+          <div class="col-sm-7">
+            {% if not field.widgets.is_hidden %}
+                {{ field.value }}
+              <small>{{ field.errors }}</small>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </fieldset>
+    <br>
+    <fieldset>
+      <legend>Endereço</legend>
+      {% for field in formEnd %}
+        {% if not field.is_hidden %}
+          <div class="form-group">
+            <div class="col-sm-3 text-right">
+              {{ field.label_tag }}
+            </div>
+            <div class="col-sm-7">
+              {{ field.value }}
+              <small>{{ field.errors }}</small>
+            </div>
+          </div>
+        {% endif %}
+      {% empty %}
+        <div class="form-group">
+          <div class="col-sm-3 text-right">
+            Sem Endereço Registrado
+          </div>
+        </div>
+      {% endfor %}
+    </fieldset>
+    <br>
+    <fieldset>
+      <div class="form-group">
+        <div class='col-sm-12'>
+          <legend>Contatos</legend>
+          <div class="col-sm-10 padding-top-1">
+            <table class='table table-hover table-bordered'>
+              <tr>
+                <th class='text-center'>Telefone</th>
+                <th class='text-center'>Celular</th>
+                <th class='text-center'>E-mail</th>
+              </tr>
+              <tr>
+                <td class='text-center'>{{ formContact.tel.value }}
+                <small>{{ formContact.errors }}</small></td>
+                <td class='text-center'>{{ formContact.cel.value }}
+                <small>{{ formContact.errors }}</small></td>
+                <td class='text-center'>{{ formContact.email.value }}
+                <small>{{ formContact.errors }}</small></td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
-    </div>
-    {% endfor %}
-      <div class="col-sm-offset-1 col-sm-5">
-        <a href="{% url 'alunos:home' %}">
-        <button class="btn btn-default">Voltar</button></a>
-      </div>
-    </div>
+    </fieldset>
   </form>
+      <div class="col-sm-offset-1 col-sm-5">
+        <a href="{% url 'alunos:home' %}"><button class="btn btn-default">
+        Voltar</button></a>
+      </div>
+    </div>
 {% endblock %}
