@@ -37,6 +37,7 @@ class RegisterAluno(models.Model):
         ordering = ['name']
 
 class RegisterFamiliares(models.Model):
+    ref_aluno = models.OneToOneField(RegisterAluno)
     firstname = models.CharField('Primeiro Nome', max_length=35)
     parent = models.CharField('Parentesco', max_length=15)
     profissao = models.CharField('Profissão', max_length=15)
