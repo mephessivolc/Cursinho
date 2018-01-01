@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '33wf%=*#*4tsz)e&7m2$_8k*az#+ox^oa2t2%15jixy3fc(u*b'
+SECRET_KEY = 'y_q9*1)lj*-q87v4*k6p)6%e=g5!y63s(osr=hobjrh4yjxdep'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -31,6 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'cursinho.core',
+    'cursinho.accounts',
+    'cursinho.alunos',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,10 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'cursinho.core',
-    'cursinho.accounts',
-    'cursinho.alunos',
-    
 ]
 
 MIDDLEWARE = [
@@ -77,14 +77,16 @@ WSGI_APPLICATION = 'cursinho.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'Cursinho',
+        'USER': 'root',
+        'PASSWORD': '@dmin1234',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -122,29 +124,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+AUTH_USER_MODEL = 'accounts.User'
+LOGIN_REDIRECT_URL = 'core.login'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'cursinho', 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'core', 'media')
 MEDIA_URL = '/media/'
 
-# E-mails
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'Nome <email@gmail.com>'
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'email@gmail.com'
-# EMAIL_HOST_PASSWORD = 'senha'
-# EMAIL_PORT = 587
-
-CONTACT_EMAIL = 'contato@simplemooc.com'
-
-# Auth
-LOGIN_URL = 'accounts:login'
-LOGIN_REDIRECT_URL = 'core:home'
-LOGOUT_URL = 'accounts:logout'
-AUTH_USER_MODEL = 'accounts.User'
 
 # Para fazer LOGOUT qdo fechar o browser ou aba
 SESSION_EXPIRE_AT_BROWSER_CLOSE=True

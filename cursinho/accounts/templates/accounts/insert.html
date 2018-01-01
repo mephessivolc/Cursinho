@@ -1,4 +1,4 @@
-{% extends 'alunos/home.html' %}
+{% extends 'accounts/home.html' %}
 
 {% block extend_left %}
   {{ block.super }}
@@ -13,33 +13,144 @@
       <div class="form-group">
         <div class='col-sm-12'>
           <legend>Informações gerais</legend>
-          {% for field in form %}
-            <div class="col-sm-10 padding-top-1">
-              {{ field }}
-              <small>{{ field.errors }}</small>
+            <div class='col-sm-1 padding-top-2'>
+              {{ form.username.label_tag }}
             </div>
-          {% endfor %}
+            <div class='col-sm-11 padding-top-1'>
+              {{ form.username }}
+              <small>{{ form.username.errors }}</small>
+            </div>
+
+            <div class='col-sm-1 padding-top-2'>
+              {{ form.name.label_tag }}
+            </div>
+            <div class='col-sm-11 padding-top-1'>
+              {{ form.name }}
+              <small>{{ form.name.errors }}</small>
+            </div>
+
+            <div class='col-sm-1 padding-top-2'>
+              {{ form.email.label_tag }}
+            </div>
+            <div class='col-sm-5 padding-top-1'>
+              {{ form.email }}
+              <small>{{ form.email.errors }}</small>
+            </div>
+
+            <div class='col-sm-1 padding-top-2'>
+              {{ form.cel.label_tag }}
+            </div>
+            <div class='col-sm-5 padding-top-1'>
+              {{ form.cel }}
+              <small>{{ form.cel.errors }}</small>
+            </div>
+
         </div>
       </div>
     </fieldset>
+
+    <fieldset>
+      <div class="form-group">
+        <div class='col-sm-12'>
+          <legend>Acessibilidade</legend>
+            <div class='col-sm-1 padding-top-2'>
+              {{ form.password1.label_tag }}
+            </div>
+            <div class='col-sm-4 padding-top-1'>
+              {{ form.password1 }}
+              <small>{{ form.password1.errors }}</small>
+            </div>
+
+            <div class='col-sm-2 padding-top-2'>
+              {{ form.password2.label_tag }}
+            </div>
+            <div class='col-sm-4 padding-top-1'>
+              {{ form.password2 }}
+              <small>{{ form.password2.errors }}</small>
+            </div>
+
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <div class="form-group">
+        <div class='col-sm-12'>
+          <legend>Funções</legend>
+            <div class='col-sm-1 padding-top-2'>
+              {{ form.cargo.label_tag }}
+            </div>
+            <div class='col-sm-4 padding-top-1'>
+              {{ form.cargo }}
+              <small>{{ form.cargo.errors }}</small>
+            </div>
+
+            <div class='col-sm-2 padding-top-2'>
+              {{ form.com.label_tag }}
+            </div>
+            <div class='col-sm-4 padding-top-1'>
+              {{ form.com }}
+              <small>{{ form.com.errors }}</small>
+            </div>
+
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <div class="form-group">
+        <div class='col-sm-12'>
+          <legend>Endereço</legend>
+            <div class='col-sm-1 padding-top-2'>
+              {{ form.end.label_tag }}
+            </div>
+            <div class='col-sm-11 padding-top-1'>
+              {{ form.end }}
+              <small>{{ form.end.errors }}</small>
+            </div>
+
+            <div class='col-sm-1 padding-top-2'>
+              {{ form.num_end.label_tag }}
+            </div>
+            <div class='col-sm-5 padding-top-1'>
+              {{ form.num_end }}
+              <small>{{ form.num_end.errors }}</small>
+            </div>
+
+            <div class='col-sm-1 padding-top-2'>
+              {{ form.bairro_end.label_tag }}
+            </div>
+            <div class='col-sm-5 padding-top-1'>
+              {{ form.bairro_end }}
+              <small>{{ form.bairro_end.errors }}</small>
+            </div>
+
+            <div class='col-sm-2 padding-top-2'>
+              {{ form.comp_end.label_tag }}
+            </div>
+            <div class='col-sm-4 padding-top-1'>
+              {{ form.comp_end }}
+              <small>{{ form.comp_end.errors }}</small>
+            </div>
+
+            <div class='col-sm-1 padding-top-2'>
+              {{ form.cep_end.label_tag }}
+            </div>
+            <div class='col-sm-5 padding-top-1'>
+              {{ form.cep_end }}
+              <small>{{ form.cep_end.errors }}</small>
+            </div>
+
+        </div>
+      </div>
+    </fieldset>
+
     <div class="form-group">
       <div class="col-sm-10">
         <br>
       </div>
     </div>
-    <fieldset>
-      <div class="form-group">
-        <div class='col-sm-12'>
-          <legend>Endereço</legend>
-          {% for field in formEnd %}
-            <div class="col-sm-10 padding-top-1">
-              {{ field }}
-              <small>{{ field.errors }}</small>
-            </div>
-          {% endfor %}
-        </div>
-      </div>
-    </fieldset>
+
     <div class="form-group">
       <div class="col-sm-10">
         <br>
@@ -50,7 +161,7 @@
         <button type="submit" class="btn btn-default">Cadastrar</button>
       </div>
       <div class="col-sm-offset-1 col-sm-5">
-        <a href="{% url 'alunos:home' %}">
+        <a href="{% url 'accounts:home' %}">
         <button class="btn btn-default">Voltar</button></a>
       </div>
     </div>

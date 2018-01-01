@@ -23,11 +23,10 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^', include('cursinho.core.urls', namespace='core')),
     url(r'^docentes/', include('cursinho.accounts.urls', namespace='accounts')),
-    url(r'^alunos/', include('cursinho.alunos.urls', namespace='alunos')),
     url(r'^admin/', include(admin.site.urls)),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(
-        settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
-    )
+# if settings.DEBUG:
+#     urlpatterns += static(
+#         settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+#     )

@@ -1,29 +1,152 @@
-{% extends 'accounts/base.html' %}
+{% extends 'accounts/home.html' %}
 
 {% block extend_left %}
   {{ block.super }}
-  <small>/ {{ form.username.value.lower.capitalize }} </small>
+  <small>/ Informação Geral de Docente </small>
 {% endblock %}
 
 {% block extend_right %}
-  {{ form.non_field_errors }}
-  <div class="form-horizontal" >
     {% csrf_token %}
-    {% for field in form %}
-    <div class="form-group">
-      <div class="col-sm-2 text-right">
-        {{ field.label_tag }}
+    <fieldset>
+      <div class="form-group">
+        <div class='col-sm-12'>
+          <legend>Informações gerais</legend>
+          <div class='col-sm-12'>
+            <div class='col-sm-1 padding-top-2'>
+              <font >{{ form.username.label_tag }}</font>
+            </div>
+            <div class='col-sm-11 padding-top-1'>
+              <font class='text-alt-1'>{{ form.username.value }}</font>
+              <small>{{ form.username.errors }}</small>
+            </div>
+          </div>
+          <div class='col-sm-12'>
+            <div class='col-sm-1 padding-top-2'>
+              <font >{{ form.name.label_tag }}</font>
+            </div>
+            <div class='col-sm-11 padding-top-1'>
+              <font class='text-alt-1'>{{ form.name.value }}</font>
+              <small>{{ form.name.errors }}</small>
+            </div>
+          </div>
+
+          <div class='col-sm-12'>
+            <div class='col-sm-1 padding-top-2'>
+              <font >{{ form.email.label_tag }}</font>
+            </div>
+            <div class='col-sm-11 padding-top-1'>
+              <font class='text-alt-1'>{{ form.email.value }}</font>
+              <small>{{ form.email.errors }}</small>
+            </div>
+          </div>
+
+          <div class='col-sm-12'>
+            <div class='col-sm-1 padding-top-2'>
+              <font >{{ form.cel.label_tag }}</font>
+            </div>
+            <div class='col-sm-5 padding-top-1'>
+              <font class='text-alt-1'>{{ form.cel.value }}</font>
+              <small>{{ form.cel.errors }}</small>
+            </div>
+          </div>
+
+        </div>
       </div>
-      <div class="col-sm-8">
-        {{ field.value }}
-        <small>{{ field.errors }}</small>
+    </fieldset>
+    <br>
+    <fieldset>
+      <div class="form-group">
+        <div class='col-sm-12'>
+          <legend>Funções</legend>
+            <div class='col-sm-1 padding-top-2'>
+              {{ form.cargo.label_tag }}
+            </div>
+            <div class='col-sm-4 padding-top-1'>
+              <font class='text-alt-1'>{{ cargo }}</font>
+              <small>{{ form.cargo.errors }}</small>
+            </div>
+
+            <div class='col-sm-2 padding-top-2'>
+              {{ form.com.label_tag }}
+            </div>
+            <div class='col-sm-4 padding-top-1'>
+              <font class='text-alt-1'>{{ com }}</font>
+              <small>{{ form.com.errors }}</small>
+            </div>
+
+        </div>
+      </div>
+    </fieldset>
+    <br>
+
+    <fieldset>
+      <div class="form-group">
+        <div class='col-sm-12'>
+          <legend>Endereço</legend>
+            <div class='col-sm-12'>
+              <div class='col-sm-2 padding-top-2'>
+                <font >{{ form.end.label_tag }}</font>
+              </div>
+              <div class='col-sm-10 padding-top-1'>
+                <font class='text-alt-1'>{{ form.end.value }}</font>
+                <small>{{ form.end.errors }}</small>
+              </div>
+            </div>
+
+            <div class='col-sm-12'>
+              <div class='col-sm-2 padding-top-2'>
+                <font >{{ form.num_end.label_tag }}</font>
+              </div>
+              <div class='col-sm-4 padding-top-1'>
+                <font class='text-alt-1'>{{ form.num_end.value }}</font>
+                <small>{{ form.num_end.errors }}</small>
+              </div>
+              <div class='col-sm-2 padding-top-2'>
+                <font >{{ form.bairro_end.label_tag }}</font>
+              </div>
+              <div class='col-sm-4 padding-top-1'>
+                <font class='text-alt-1'>{{ form.bairro_end.value }}</font>
+                <small>{{ form.bairro_end.errors }}</small>
+              </div>
+            </div>
+
+            <div class='col-sm-12'>
+              <div class='col-sm-2 padding-top-2'>
+                <font >{{ form.comp_end.label_tag }}</font>
+              </div>
+              <div class='col-sm-4 padding-top-1'>
+                <font class='text-alt-1'>{{ form.comp_end.value }}</font>
+                <small>{{ form.comp_end.errors }}</small>
+              </div>
+              <div class='col-sm-2 padding-top-2'>
+                <font >{{ form.cep_end.label_tag }}</font>
+              </div>
+              <div class='col-sm-4 padding-top-1'>
+                <font class='text-alt-1'>{{ form.cep_end.value }}</font>
+                <small>{{ form.cep_end.errors }}</small>
+              </div>
+            </div>
+
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="form-group">
+      <div class="col-sm-10">
+        <br>
       </div>
     </div>
-    {% endfor %}
+
+    <div class="form-group">
+      <div class="col-sm-10">
+        <br>
+      </div>
+    </div>
+    <div class="form-group">
       <div class="col-sm-offset-1 col-sm-5">
         <a href="{% url 'accounts:home' %}">
         <button class="btn btn-default">Voltar</button></a>
       </div>
     </div>
-  </div>
+
 {% endblock %}

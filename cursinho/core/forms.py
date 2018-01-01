@@ -3,12 +3,12 @@ from django.db import transaction
 
 from .models import RegisterEnd, RegisterContact
 
-from cursinho.alunos.models import RegisterAluno
 from cursinho.accounts.models import User
+
 
 class RegisterEndForm(forms.ModelForm):
 
-    def save(self, commit=True, **idRef):
+    def save(self, commit=True):
         end = super(RegisterEndForm, self).save(commit=False)
 
         if idRef['idAluno'] is not None:
@@ -38,16 +38,12 @@ class RegisterEndForm(forms.ModelForm):
 
 class RegisterContactForm(forms.ModelForm):
 
-    def save(self, commit=True, idAluno=None, idUser=None):
+    def save(self, commit=True):
         contact = super(RegisterContactForm, self).save(commit=False)
 
-        if idAluno is not None:
-            dbAluno = RegisterAluno.objects.get(id = idAluno)
-            contact.idPupil = dbAluno
-
-        elif idUser is not None:
-            dbUser = User.objects.get(id = idUser)
-            contact.idUser = dbUser
+        # if idAluno is not None:
+        #     dbAluno = RegisterAluno.objects.get(id = idAluno)
+        #     contact.idPupil = dbAluno
 
         if commit:
             contact.save()

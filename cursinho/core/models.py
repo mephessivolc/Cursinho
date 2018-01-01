@@ -1,6 +1,5 @@
 from django.db import models
 
-from cursinho.alunos.models import RegisterAluno
 from cursinho.accounts.models import User
 # Create your models here.
 
@@ -35,14 +34,6 @@ class RegisterEnd(models.Model):
     cep = models.CharField('CEP', max_length=10, blank=True)
     bairro = models.CharField('Bairro', max_length=30, blank=True)
     comp = models.CharField('Complemento', max_length=30, blank=True)
-    idPupil = models.OneToOneField(RegisterAluno,
-        blank=True, null=True, on_delete=models.CASCADE,
-        editable=False,
-    )
-    idUser = models.OneToOneField(User,
-        blank=True, null=True, on_delete=models.CASCADE,
-        editable=False,
-    )
 
     def __str__(self):
         return self.end+' '+self.numero+' '+self.bairro+' '+self.comp
@@ -55,14 +46,9 @@ class RegisterContact(models.Model):
     tel = models.CharField('Telefone', max_length = 15, blank=True, null=True)
     cel = models.CharField('Celular', max_length = 20, blank=True, null=True)
     email = models.EmailField('Email', blank=True, null=True)
-    idPupil = models.OneToOneField(RegisterAluno,
-        blank=True, null=True, on_delete=models.CASCADE,
-        editable=False,
-    )
 
     def __str__(self):
-        if self.idPupil is not None:
-            return self.idPupil.name
+        return self.tel
 
     class Meta:
         verbose_name = 'Contato'

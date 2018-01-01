@@ -25,14 +25,23 @@ Atributos = {
         'class': 'form-control'}),
     'name': forms.TextInput(attrs={'placeholder': 'Nome Completo',
         'class': 'form-control'}),
+    'end': forms.TextInput(attrs={'placeholder': 'Endereço',
+        'class': 'form-control'}),
+    'num_end': forms.TextInput(attrs={'placeholder': 'Numero',
+        'class': 'form-control'}),
+    'comp_end': forms.TextInput(attrs={'placeholder': 'Complemento',
+        'class': 'form-control'}),
+    'bairro_end': forms.TextInput(attrs={'placeholder': 'Bairro',
+        'class': 'form-control'}),
+    'cep_end': forms.TextInput(attrs={'placeholder': 'CEP',
+        'class': 'form-control'}),
+    'cel': forms.TextInput(attrs={'placeholder': '(99) 9.9999-9999',
+        'class': 'form-control'}),
     'email': forms.EmailInput(attrs={'placeholder': 'email@pessoal.com',
         'class': 'form-control'}),
-    'password1': forms.TextInput(attrs={'class': 'form-control',
-    'placeholder': 'Senha', 'type': 'password'}),
-    'password2': forms.TextInput(attrs={'class': 'form-control',
-    'placeholder': 'Confirmação de Senha', 'type': 'password'}),
-    #  my_field: forms.MultipleChoiceField(choices=SOME_CHOICES, widget=forms.CheckboxSelectMultiple())
-    'cargo': forms.Select(attrs={'class': 'select'}, choices=Cargo), # campo de menu selecao
+    # '  my_field: forms.MultipleChoiceField(choices=SOME_CHOICES, widget=forms.CheckboxSelectMultiple())
+    # 'cargo': forms.Select(attrs={'class': 'select'}, choices=Cargo), # campo de menu selecao
+
 }
 
 class UserForm(forms.ModelForm):
@@ -40,8 +49,8 @@ class UserForm(forms.ModelForm):
     password1 = forms.CharField(label='Senha',
         widget=forms.PasswordInput(attrs={'class': 'form-control',
         'placeholder': 'Senha'}))
-    password2 = forms.CharField(label='Confirmação de Senha',
-        widget=forms.PasswordInput(attrs={'class': 'form-control',
+    password2 = forms.CharField(label=u'Confirmação',
+        widget=forms.PasswordInput(attrs={'class': 'form-control padding-right-1',
         'placeholder': 'Confirmação de Senha'}))
 
     def clean_password2(self):
@@ -55,12 +64,15 @@ class UserForm(forms.ModelForm):
         user = super(UserForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password2'])
 
+        user.is_superuser = False
+        user.is_staff = True
+
         user.slug = orig = slugify(user.username)
 
         for x in itertools.count(1):
             if not User.objects.filter(slug=user.slug).exists():
                 break
-            user.slug = '%s-%d' % (orig, x)
+            user.slug = '%s%d' % (orig, x)
 
         if commit:
             user.save()
@@ -69,7 +81,9 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['name', 'username', 'email',]
+        fields = ['username', 'name', 'cel', 'email',
+            'end', 'num_end', 'comp_end', 'cep_end',
+            'bairro_end', 'cargo', 'com']
 
         widgets = Atributos
 
@@ -77,6 +91,8 @@ class DetailsUserForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['name', 'username', 'email',]
+        fields = ['username', 'name', 'cel', 'email',
+            'end', 'num_end', 'comp_end', 'cep_end',
+            'bairro_end', 'cargo', 'com']
 
         widgets = Atributos
