@@ -7,18 +7,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
 from cursinho.core.mail import send_mail_template
-from cursinho.core.utils import generate_hash_key
-
-# from .models import PasswordReset
+from cursinho.core.utils import (generate_number, random_key)
+from cursinho.accounts.forms import UserForm
+from cursinho.accounts.models import User
 
 User = get_user_model()
-
-Cargo = (
-    ('0', 'Administrativo'),
-    ('1', 'Docente'),
-    ('2', 'Plantonista'),
-    ('3', 'Outro'),
-)
 
 Atributos = {
     # 'per': forms.Select(attrs={'class':'select'}, choices=SelPer), # campo de menu selecao
@@ -40,12 +33,9 @@ Atributos = {
         'class': 'form-control'}),
     'email': forms.EmailInput(attrs={'placeholder': 'email@pessoal.com',
         'class': 'form-control'}),
-    # '  my_field: forms.MultipleChoiceField(choices=SOME_CHOICES, widget=forms.CheckboxSelectMultiple())
-    # 'cargo': forms.Select(attrs={'class': 'select'}, choices=Cargo), # campo de menu selecao
-
 }
 
-class UserForm(forms.ModelForm):
+class AlunoForm(UserForm):
     # password1 = forms.PasswordInput(attrs={'class': 'form-control'}, render_value=True)
     password1 = forms.CharField(label='Senha',
         widget=forms.PasswordInput(attrs={'class': 'form-control',
@@ -62,20 +52,19 @@ class UserForm(forms.ModelForm):
         return password2
 
     def save(self, commit=True):
-        user = super(UserForm, self).save(commit=False)
+        user = super(AlunoForm, self).save(commit=False)
         user.set_password(self.cleaned_data['password2'])
 
         user.is_superuser = False
-        user.is_staff = True
+        user.is_staff = False
 
         user.date_joined = datetime.now()
 
-        user.slug = orig = slugify(user.username)
-
+        user.slug = slugify("%s%s"%(datetime.now().year, generate_number()))
         for x in itertools.count(1):
             if not User.objects.filter(slug=user.slug).exists():
                 break
-            user.slug = '%s%d' % (orig, x)
+            user.slug=slugify('%s'%(int(user.slug)+1))
 
         if commit:
             user.save()
@@ -86,16 +75,16 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username', 'name', 'cel', 'email',
             'end', 'num_end', 'comp_end', 'cep_end',
-            'bairro_end', 'cargo', 'com']
+            'bairro_end', ]
 
         widgets = Atributos
 
-class DetailsUserForm(forms.ModelForm):
+class DetailsAlunosForm(forms.ModelForm):
 
     class Meta:
         model = User
         fields = ['username', 'name', 'cel', 'email',
             'end', 'num_end', 'comp_end', 'cep_end',
-            'bairro_end', 'cargo', 'com']
+            'bairro_end',]
 
         widgets = Atributos

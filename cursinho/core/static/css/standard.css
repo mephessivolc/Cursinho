@@ -19,6 +19,9 @@ ul {
 .fundo2 {
   background-color: red;
 }
+.text-alt-0 {
+  font-weight: bold;
+}
 .text-alt-1 {
     font-size: 15pt;
     font-weight: bold;

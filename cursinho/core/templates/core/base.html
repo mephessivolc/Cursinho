@@ -23,27 +23,27 @@
       </div>
       <div class="row">
         <ul class="nav nav-tabs">
-          {% if user.is_staff %}
             <li role="presentation"
             {% if loading == "Inicio" %}
               class="active dropdown"
             {% endif %}><a href="{% url 'core:home' %}">Inicio</a></li>
 
+          {% if user.is_staff %}
             <li role="presentation"
             {% if loading == "Docentes" %}
               class="active dropdown"
             {% endif %}><a href="{% url 'accounts:home' %}">Docentes</a></li>
-          {% endif %}
-          <!-- <li role="presentation"
-          {% if loading == "Alunos" %}
-            class="active dropdown"
-          {% endif %}><a href="#">Alunos</a></li> -->
-          <!-- <li role="presentation"
-          {% if loading == "Relatorio" %}
-            class="active dropdown"
-          {% endif %}><a href="#">Relatório</a></li> -->
-          {% if user.is_superuser %}
-          <li role="presentation" ><a href="/admin/">Administração</a></li>
+            <li role="presentation"
+            {% if loading == "Alunos" %}
+              class="active dropdown"
+            {% endif %}><a href="{% url 'alunos:home' %}">Alunos</a></li>
+            <!-- <li role="presentation"
+            {% if loading == "Relatorio" %}
+              class="active dropdown"
+            {% endif %}><a href="#">Relatório</a></li> -->
+            {% if user.is_superuser %}
+            <li role="presentation" ><a href="/admin/">Administração</a></li>
+            {% endif %} 
           {% endif %}
         </ul>
       </div>

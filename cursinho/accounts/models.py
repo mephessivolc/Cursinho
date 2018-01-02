@@ -39,8 +39,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     bairro_end = models.CharField('Bairro', max_length=10, default='')
     comp_end = models.CharField('Complemento', max_length=30, default='', blank=True, null=True)
     cep_end = models.CharField('CEP', max_length=10, default='', blank=True, null=True)
-    cargo = models.CharField('Cargo', max_length=10, choices=type_cargo, default='',)
-    com = models.CharField('Comissão', max_length=10, choices=type_com, default='',)
+    cargo = models.CharField('Cargo', max_length=10, choices=type_cargo, default='', blank=True)
+    com = models.CharField('Comissão', max_length=10, choices=type_com, default='', blank=True)
 
     objects = UserManager()
 

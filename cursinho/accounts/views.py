@@ -14,7 +14,7 @@ from .forms import (UserForm, DetailsUserForm)
 User = get_user_model()
 @login_required(login_url='core:login')
 def home(request):
-    form = User.objects.filter(is_active=True).exclude(pk=1).order_by('username')
+    form = User.objects.filter(is_active=True).filter(is_staff=True).exclude(pk=1).order_by('name')
     context = {
         'loading': 'Docentes',
         'form': form,

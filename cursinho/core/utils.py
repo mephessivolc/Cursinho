@@ -1,9 +1,6 @@
 import hashlib
 import string
 import random
-import itertools
-
-from django.utils.text import slugify
 
 def random_key(size=5):
     chars = string.ascii_uppercase + string.digits
@@ -13,3 +10,8 @@ def generate_hash_key(salt, random_str_size=5):
     random_str = random_key(random_str_size)
     text = random_str + salt
     return hashlib.sha224(text.encode('utf-8')).hexdigest()
+
+def generate_number(size=5):
+    random.seed()
+    number = '1234567890'
+    return ''.join(random.choice(number) for x in range(size))
