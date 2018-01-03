@@ -6,10 +6,6 @@ from cursinho.accounts.models import User
 
 class Alunos(User):
 
-    @models.permalink
-    def get_absolute_link(self):
-        return ('alunos:details', (), {'slug': self.slug})
-
     class Meta:
 
         ordering=['name']
@@ -21,8 +17,8 @@ class FamiliaAluno(models.Model):
     name = models.CharField('Primeiro Nome', max_length=15, )
     parente = models.CharField('Parentesco', max_length=10)
     esc = models.CharField('Escolaridade', max_length=10)
-    salario = models.FloatField('Salario')
-    ref_aluno = models.OneToOneField(Alunos)
+    salario = models.FloatField('Renda')
+    ref_aluno = models.OneToOneField(Alunos, on_delete=models.CASCADE,)
 
     def __str__(self):
         return self.name

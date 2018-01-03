@@ -5,7 +5,7 @@ from django.conf import settings
 
 from cursinho.accounts.models import User
 
-from .forms import (AlunoForm, DetailsAlunosForm)
+from .forms import (AlunoForm, DetailsAlunosForm, FamiliaAlunosForm)
 # Create your views here.
 
 @login_required(login_url='core:login')
@@ -27,6 +27,7 @@ def home(request):
 @login_required(login_url='core:login')
 def insert(request):
     form = AlunoForm(request.POST or None)
+    formCont = FamiliaAlunosForm(request.POST or None)
 
     if form.is_valid():
         resp = form.save()
@@ -37,10 +38,12 @@ def insert(request):
     context = {
         'loading': 'Alunos',
         'form': form,
+        'formCont': formCont,
     }
 
     return render(request, template_name, context)
 
+@login_required(login_url='core:login')
 def details(request, slug):
     alunos = get_object_or_404(User, slug=slug)
 

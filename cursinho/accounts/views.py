@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import (UserCreationForm, PasswordChangeForm,
     SetPasswordForm)
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import get_user_model
 from django.conf import settings
 
@@ -13,6 +13,7 @@ from .forms import (UserForm, DetailsUserForm)
 
 User = get_user_model()
 @login_required(login_url='core:login')
+# @permission_required('has_view.view', login_url='core:login')
 def home(request):
     form = User.objects.filter(is_active=True).filter(is_staff=True).exclude(pk=1).order_by('name')
     context = {
@@ -23,6 +24,7 @@ def home(request):
     return render(request, template_name, context)
 
 @login_required(login_url='core:login')
+# @permission_required('has_view.view', login_url='core:login')
 def insert(request):
     form = UserForm(request.POST or None)
 
@@ -39,6 +41,7 @@ def insert(request):
     return render(request, template_name, context)
 
 @login_required(login_url='core:login')
+# @permission_required('has_permission.True', login_url='core:login')
 def details(request, slug):
     docente = get_object_or_404(User, slug=slug)
 

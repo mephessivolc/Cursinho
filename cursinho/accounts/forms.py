@@ -59,6 +59,9 @@ class UserForm(forms.ModelForm):
         password2 = self.cleaned_data.get("password2")
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError('A confirmação não está correta')
+
+        if len(password1)<6 or len(password2)<6:
+            raise forms.ValidationError('Senha deve conter no mínimo 6 carateres')
         return password2
 
     def save(self, commit=True):

@@ -1,4 +1,4 @@
-import itertools
+# import itertools
 
 from django import forms
 from django.utils.text import slugify
@@ -10,6 +10,8 @@ from cursinho.core.mail import send_mail_template
 from cursinho.core.utils import (generate_number, random_key)
 from cursinho.accounts.forms import UserForm
 from cursinho.accounts.models import User
+
+from .models import FamiliaAluno
 
 User = get_user_model()
 
@@ -33,6 +35,17 @@ Atributos = {
         'class': 'form-control'}),
     'email': forms.EmailInput(attrs={'placeholder': 'email@pessoal.com',
         'class': 'form-control'}),
+}
+
+FamiliaAtributos = {
+    'nome': forms.TextInput(attrs={'placeholder': 'Nome',
+        'class': 'form-control'}),
+    'parente': forms.TextInput(attrs={'placeholder': 'Parentesco',
+        'class': 'form-control'}),
+    'esc': forms.EmailInput(attrs={'placeholder': 'Escolaridade',
+        'class': 'form-control'}),
+    'salario': forms.EmailInput(attrs={'placeholder': 'Renda',
+            'class': 'form-control'}),
 }
 
 class AlunoForm(UserForm):
@@ -60,11 +73,11 @@ class AlunoForm(UserForm):
 
         user.date_joined = datetime.now()
 
-        user.slug = slugify("%s%s"%(datetime.now().year, generate_number()))
-        for x in itertools.count(1):
+        verify = True
+        while verify:
+            user.slug = slugify("%s%s"%(datetime.now().year, generate_number()))
             if not User.objects.filter(slug=user.slug).exists():
-                break
-            user.slug=slugify('%s'%(int(user.slug)+1))
+                verify = False
 
         if commit:
             user.save()
@@ -88,3 +101,22 @@ class DetailsAlunosForm(forms.ModelForm):
             'bairro_end',]
 
         widgets = Atributos
+
+class FamiliaAlunosForm(forms.ModelForm):
+
+    def save(self, commit=True, ref=None):
+        familia = super(FamiliaAlunosForm, self).save(commit=False)
+
+        familia.ref_aluno = ref
+        # Pensar em adicionar varios registros no banco de dados
+        # adicionar no insert.html o javascript e ver se colocar os campos no lugar certo
+        # colocar o link da pagina no insert_contact_url do javascript
+        # o arquivo do javascript é initial.js
+        if commit:
+            familia.save()
+
+        return familia
+
+    class Meta:
+        model = FamiliaAluno
+        fields = ['name', 'parente', 'esc', 'salario']
