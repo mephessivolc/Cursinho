@@ -25,15 +25,12 @@ SECRET_KEY = 'y_q9*1)lj*-q87v4*k6p)6%e=g5!y63s(osr=hobjrh4yjxdep'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'cursinho.core',
-    'cursinho.accounts',
-    'cursinho.alunos',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # apps
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -79,12 +78,8 @@ WSGI_APPLICATION = 'cursinho.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Cursinho',
-        'USER': 'root',
-        'PASSWORD': '@dmin1234',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -128,8 +123,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-AUTH_USER_MODEL = 'accounts.User'
-LOGIN_REDIRECT_URL = 'core.login'
+# AUTH_USER_MODEL = 'accounts.User'
+# LOGIN_REDIRECT_URL = 'core.login'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'core', 'media')
 MEDIA_URL = '/media/'
